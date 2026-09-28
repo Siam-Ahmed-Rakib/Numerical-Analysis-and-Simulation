@@ -45,7 +45,7 @@
 
 import numpy as np
 
-from physics_engine_mezba import Params, rk4_step
+from physics_engine import Params, rk4_step
 
 
 # ============================================================
