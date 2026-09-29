@@ -1,50 +1,10 @@
-"""
-================================================================
- MODULE 4 / 5  --  INTERACTIVE UI (SLIDERS, BUTTONS, READOUTS)
-================================================================
- Contributor : Imdadul Hasan (2105160)
- Part of     : Defender-Aware Basketball Shot Simulation
-               (extension of Silverberg, Tran & Adcock, 2003)
-
- Responsibility
-   The base paper treats the shot's initial conditions as
-   statistical parameters chosen offline (Sec. III). For this
-   project we wanted those same parameters -- release speed,
-   launch angle, wind, shooter height, and the two NEW defender
-   parameters (position and reach) -- to be explorable live.
-   This module builds that control surface:
-
-     - two read-out panels (SHOT INPUTS / FLIGHT DIAGNOSTICS)
-       that mirror, in plain text, the numbers the physics
-       engine is using and the outcome it produced
-     - a "MODEL" panel that prints the governing equation and
-       the constants actually in force, so the numbers on
-       screen are always traceable back to the formulation
-     - six Matplotlib sliders (speed, angle, wind, shooter
-       height, defender X, defender reach) and three buttons
-       (Replay / Auto-Optimize / Reset)
-
- Depends on : matplotlib.widgets (Slider, Button), textwrap
- Used by    : main_simulation.py (as a mixin of BasketballSimulator)
-================================================================
-"""
-
 import textwrap
 from matplotlib.widgets import Slider, Button
 
 
-# ============================================================
-# UIPanelsMixin -- contributed to BasketballSimulator
-# ============================================================
-
 class UIPanelsMixin:
-    """
-    Read-out panels, sliders, buttons and their callbacks.
-    Combined with SceneMixin and OptimizationMixin into the
-    full BasketballSimulator class in main_simulation.py.
-    """
 
-    # --------------------------------------------------------
+
     def _setup_info_panel(self):
         ax = self.ax_info
         ax.set_xticks([]); ax.set_yticks([])
@@ -70,7 +30,6 @@ class UIPanelsMixin:
         self.txt_note = ax.text(0.07, 0.04, '', fontsize=9, va='bottom',
                                 color='#4b5563', linespacing=1.5)
 
-    # --------------------------------------------------------
     def _setup_model_panel(self):
         ax = self.ax_model
         ax.set_xticks([]); ax.set_yticks([])
@@ -122,7 +81,6 @@ class UIPanelsMixin:
                               "drops through the rim.", 32),
                 fontsize=9, va='bottom', color='#4b5563', linespacing=1.5)
 
-    # --------------------------------------------------------
     def _create_sliders(self):
         sl_kw = dict(track_color='#e5e7eb')
         L, W, H = 0.115, 0.250, 0.022
@@ -166,7 +124,6 @@ class UIPanelsMixin:
             s.valtext.set_fontweight('bold')
             s.on_changed(self._on_change)
 
-    # --------------------------------------------------------
     def _create_buttons(self):
         R0 = 0.600
         self.btn_replay = Button(self.fig.add_axes([R0, 0.045, 0.105, 0.042]),
@@ -192,7 +149,6 @@ class UIPanelsMixin:
         self.btn_replay.label.set_color('white')
         self.btn_opt.label.set_color('white')
 
-    # --------------------------------------------------------
     def _on_change(self, _val):
         self.v0 = self.sl_v.val
         self.theta = self.sl_a.val
@@ -206,7 +162,6 @@ class UIPanelsMixin:
         self.sl_w.reset(); self.sl_sh.reset(); self.sl_dx.reset()
         self.sl_dh.reset(); self.sl_a.reset(); self.sl_v.reset()
 
-    # --------------------------------------------------------
     def _update_panel(self):
         r = self.result
         ok = r['success']
