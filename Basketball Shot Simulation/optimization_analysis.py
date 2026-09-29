@@ -45,8 +45,8 @@ import textwrap
 import numpy as np
 import matplotlib.pyplot as plt
 
-from physics_engine_mezba import Params
-from trajectory_simulation_siam import simulate
+from physics_engine import Params
+from trajectory_simulation import simulate
 
 
 # ============================================================
