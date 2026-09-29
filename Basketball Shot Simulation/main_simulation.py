@@ -150,7 +150,7 @@ class BasketballSimulator(SceneMixin, UIPanelsMixin, OptimizationMixin):
             except Exception:
                 pass
         n = len(self.result['x'])
-        self.step = max(1, n // 160)
+        self.step = max(1, n // 50)
         self.n_frames = len(range(0, n, self.step)) + 12   # hold at the end
 
         self.anim = animation.FuncAnimation(
